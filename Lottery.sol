@@ -14,4 +14,13 @@ contract Lottery {
         require(block.timestamp <= EndTime,"Time is over");
         participants.push(payable(msg.sender));
     }
+    function getBalance() public view returns(uint) {
+        require(msg.sender == Manager,"You are not manager");
+        return address(this).balance;
+    }
+
+    function Random() public view returns(uint){
+        require(msg.sender == Manager);
+        return uint(keccak256(abi.encodePacked(block.difficulty,block.timestamp,participants.length)));
+    }
 }
