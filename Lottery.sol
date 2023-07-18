@@ -9,5 +9,9 @@ contract Lottery {
     constructor(){
         Manager = msg.sender;
     }
-
+    receive() external payable {
+        require(msg.value == 2 ether,"Balance amount is not equal to 2 ether.");
+        require(block.timestamp <= EndTime,"Time is over");
+        participants.push(payable(msg.sender));
+    }
 }
