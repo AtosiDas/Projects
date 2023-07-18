@@ -23,4 +23,14 @@ contract Lottery {
         require(msg.sender == Manager);
         return uint(keccak256(abi.encodePacked(block.difficulty,block.timestamp,participants.length)));
     }
+    function SelectWinner() public {
+        require(msg.sender == Manager);
+        require(participants.length >= 3);
+        require(block.timestamp > EndTime,"Lottery is not over.");
+        uint index = Random() % participants.length;
+        address payable winner;
+        winner = participants[index];
+        winner.transfer(getBalance());
+        participants = new address payable[](0);
+    }
 }
