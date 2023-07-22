@@ -37,4 +37,14 @@ contract Crowdfunding {
         contributors[msg.sender] += msg.value;
         raisedAmount += msg.value;
     }
+
+    function refund() public {
+        require(block.timestamp > deadline && raisedAmount < target,"Refund is not possible.");
+        require(contributors[msg.sender] > 0,"Not possible");
+        address payable user = payable(msg.sender);
+        user.transfer(contributors[msg.sender]);
+        raisedAmount -= contributors[msg.sender];
+        contributors[msg.sender] = 0;
+        noOfContributors--;
+    }
 }
