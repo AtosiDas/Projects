@@ -27,4 +27,14 @@ contract Crowdfunding {
         MinContribution = 5 ether;
         manager = msg.sender;
     }
+
+    function sendEther() public payable {
+        require(block.timestamp < deadline,"Deadline is over");
+        require(msg.value >= MinContribution,"Amount is very low.");
+        if(contributors[msg.sender] == 0){
+            noOfContributors++; 
+        }
+        contributors[msg.sender] += msg.value;
+        raisedAmount += msg.value;
+    }
 }
