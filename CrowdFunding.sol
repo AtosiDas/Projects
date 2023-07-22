@@ -19,5 +19,12 @@ contract Crowdfunding {
         mapping(address => bool) voters;
     }
     mapping(uint => Request) public requests;
-    uint public numRequests;
+    uint public numberOfRequests;
+    
+    constructor(uint _target, uint _deadline) {
+        target = _target;
+        deadline = block.timestamp + _deadline; //deadline is in seconds.
+        MinContribution = 5 ether;
+        manager = msg.sender;
+    }
 }
