@@ -30,6 +30,7 @@ contract Voting {
     mapping(uint => voters) public voter;
 
     constructor(uint _TimeForRegistration,uint _timeforApply, uint _timeforVote){
+	require(_TimeForRegistration < _timeforApply && _timeforApply < _timeforVote);
         selector = msg.sender;
         TimeForRegistration = block.timestamp + _TimeForRegistration;
         TimeForApply = block.timestamp + _timeforApply;
