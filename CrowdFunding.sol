@@ -54,6 +54,7 @@ contract Crowdfunding {
     }
 
     function createRequestes(string memory _description, address payable _recipient, uint _value) public onlyManager{
+        require(_value <= target);
         Request storage newRequest = requests[numberOfRequests];
         numberOfRequests++;
         newRequest.description = _description;
