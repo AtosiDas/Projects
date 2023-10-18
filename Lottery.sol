@@ -4,10 +4,11 @@ pragma solidity >=0.7.0 <0.9.0;
 contract Lottery {
     address public Manager;
     address payable[] public participants;
-    uint EndTime = block.timestamp + 2 minutes;
+    uint EndTime;
     
-    constructor(){
+    constructor(uint _endTime){
         Manager = msg.sender;
+        EndTime = block.timestamp + _endTime;
     }
     receive() external payable {
         require(msg.value == 2 ether,"Balance amount is not equal to 2 ether.");
@@ -21,7 +22,7 @@ contract Lottery {
 
     function Random() public view returns(uint){
         require(msg.sender == Manager);
-        return uint(keccak256(abi.encodePacked(block.difficulty,block.timestamp,participants.length)));
+        return uint(keccak256(abi.encodePacked(block.timestamp,block.number,participants.length)));
     }
     function SelectWinner() public {
         require(msg.sender == Manager);
